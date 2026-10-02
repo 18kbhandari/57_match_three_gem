@@ -43,19 +43,19 @@ Each task must be completed using an iterative process involving LLM suggestions
 
 ### Task 1: Fix the invalid swap move deduction bug
 
-Swapping two gems that do not produce any 3-in-a-row match reverts the gems back to their original tiles, but the game still docks a move. In board.process_swap(), self.moves_remaining is decremented before validating whether matches were found. This unfairly penalizes players for invalid moves. Move the deduction logic so that self.moves_remaining -= 1 is only executed when a swap successfully generates at least one match.
+Swapping two gems that do not form any 3-in-a-row combination reverts the gems back to their original tiles, yet the game still docks a remaining move. Ensure moves are only deducted when a swap successfully creates at least one valid match.
 
-### Task 2: Implement cascade combo bonus scoring
+### Task 2: Implement cascade combo multiplier
 
-Currently, all cleared gems award a flat 10 points each, even if a cascade causes multiple successive drop reactions. In board.resolve_matches(), track the cascade combo chain count and apply a progressive score multiplier (e.g., 1x for initial matches, 2x for secondary drops, 3x for tertiary cascades) so players are rewarded for planning chain reactions.
+Gems currently award a flat point value regardless of whether they were matched by the player or cleared via gravity chain reactions. Introduce a cascade combo multiplier that increases score rewards sequentially for every consecutive falling reaction triggered within a single turn.
 
-### Task 3: Implement 4-in-a-row special / bomb gems
+### Task 3: Implement 4-in-a-row special line-clear gems
 
-In match-3 games, matching 4 gems of the same color typically creates an enhanced tile. Modify board.find_matches() and match resolution so that matching 4 gems spawns a special glowing "Bomb Gem". When that Bomb Gem is later matched or detonated, it clears its entire row or column.
+Standard match-3 games reward larger combinations. Aligning 4 matching gems in a line should merge them into an enhanced glowing gem that detonates an entire row or column when subsequently matched.
 
 ### Task 4:Implement an idle hint indicator
 
-If a player stays idle without clicking for more than 5 seconds, find a valid pair of adjacent gems that would produce a match if swapped, and render a pulsing outline or shimmer over those two gems to provide a gentle hint.
+Players can occasionally get stuck scanning for potential combinations. If no input is registered for more than 5 seconds, highlight an available adjacent swap pair with a subtle pulsing or shimmering animation to guide the player forward.
 
 ---
 
