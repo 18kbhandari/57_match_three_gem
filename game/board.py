@@ -19,7 +19,6 @@ class Gem:
         self.color = color
         self.target_row = target_row
         self.col = col
-        # Start higher up to animate falling down
         self.current_y = (target_row - 2) * TILE_SIZE
         self.target_y = target_row * TILE_SIZE
         self.fall_speed = 12.0
@@ -35,7 +34,6 @@ class Gem:
 
 
 class Board:
-    """Manages animated gem grid, gravity drops, score, and game limits."""
 
     def __init__(self, offset_x, offset_y, target_score=500, max_moves=20):
         self.offset_x = offset_x
@@ -49,7 +47,6 @@ class Board:
         self.reset()
 
     def reset(self):
-        """Reset board grid, score, and move limits."""
         self.score = 0
         self.moves_remaining = self.max_moves
         self.selected = None
@@ -57,13 +54,12 @@ class Board:
             for c in range(GRID_SIZE):
                 color = random.choice(GEM_COLORS)
                 gem = Gem(color, r, c)
-                gem.current_y = gem.target_y  # Snap instantly on initial start
+                gem.current_y = gem.target_y  
                 self.grid[r][c] = gem
 
         self.resolve_matches()
 
     def is_animating(self):
-        """Returns True if any gem is currently dropping down."""
         for r in range(GRID_SIZE):
             for c in range(GRID_SIZE):
                 if self.grid[r][c] and self.grid[r][c].is_animating():
@@ -71,7 +67,6 @@ class Board:
         return False
 
     def swap_gems(self, pos1, pos2):
-        """Swap positions and target render coordinates of two gems."""
         r1, c1 = pos1
         r2, c2 = pos2
 
@@ -94,10 +89,8 @@ class Board:
         return abs(r1 - r2) + abs(c1 - c2) == 1
 
     def find_matches(self):
-        """Scan grid for horizontal and vertical 3-in-a-row color matches."""
         matched = set()
 
-        # Horizontal matches
         for r in range(GRID_SIZE):
             for c in range(GRID_SIZE - 2):
                 if (
@@ -108,7 +101,6 @@ class Board:
                 ):
                     matched.update([(r, c), (r, c + 1), (r, c + 2)])
 
-        # Vertical matches
         for r in range(GRID_SIZE - 2):
             for c in range(GRID_SIZE):
                 if (
@@ -158,12 +150,10 @@ class Board:
         self.swap_gems(pos1, pos2)
         matches = self.find_matches()
 
-        # BUG SYMPTOM:
-        # Move count decrements on EVERY swap attempt even invalid ones.
         self.moves_remaining -= 1
 
         if not matches:
-            self.swap_gems(pos1, pos2)  # Revert invalid swap
+            self.swap_gems(pos1, pos2)
             return False
 
         cleared = self.resolve_matches()
