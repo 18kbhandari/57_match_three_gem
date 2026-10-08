@@ -21,9 +21,15 @@ This folder contains the completed Lab-4 work for the Match-3 Gem Swap Repair La
 ### Submission Files
 
 - `Updated_Code/` — completed source code
-- `Videos/Before.mp4` — 10-second BEFORE gameplay video
-- `Videos/After.mp4` — 10-second AFTER gameplay video
+- `Videos/Before.mp4` — 10-second BEFORE gameplay video (add locally)
+- `Videos/After.mp4` — 10-second AFTER gameplay video (add locally)
 - Chat/LLM link — [Complete ChatGPT conversation](https://chatgpt.com/c/6ac75ac6-349c-83e8-b22b-03e66919a350)
+
+### Chat/LLM History
+
+Complete ChatGPT conversation used for this lab:
+
+https://chatgpt.com/c/6ac75ac6-349c-83e8-b22b-03e66919a350
 
 ### Folder Structure
 
